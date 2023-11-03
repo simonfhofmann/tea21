@@ -6,7 +6,8 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
-int foo
+int foo;
+
 auto main(int argc, char **argv) -> int
 {
    
@@ -16,5 +17,6 @@ auto main(int argc, char **argv) -> int
      * More info at https://fmt.dev/latest/api.html
      */
     fmt::print("Hello, {}!\n", "hello i am under water please help me");
+    fmt::print("Value of foo {} adress of foo{}",foo,fmt::ptr(&foo));
     return 0; /* exit gracefully*/
 }
