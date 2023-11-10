@@ -4,6 +4,7 @@
 #include "CLI/CLI.hpp"
 #include "config.h"
 void print_vector(const std::vector<int>& vec);
+void binary_search(const std::vector<int>& vec,int num);
 auto main(int argc, char **argv) -> int
 {
     int count = 20;
@@ -51,6 +52,7 @@ auto main(int argc, char **argv) -> int
         print_vector(vector);
     }
     fmt::print("Time elapsed {} \n",elapsed);
+    binary_search(vector, 17);
     /**
      * The {fmt} lib is a cross platform library for printing and formatting text
      * it is much more convenient than std::cout and printf
@@ -68,4 +70,26 @@ void print_vector(const std::vector<int>& vec) {
         std::cout << element << " ";
     }
     std::cout << std::endl;
+}
+void binary_search(const std::vector<int>& vec, int num)
+{
+    int l = 0;
+    int r = vec.size();
+    while (l<=r)
+    {   
+        int mid = (r+l)/2;
+        if(vec[mid] == num){
+            fmt::print("{} is in vector",num);
+            return;
+        }
+        else if(vec[mid] < num)
+        {
+            l = mid +1; 
+        }
+        else if(vec[mid] > num)
+        {
+            r = mid - 1; 
+        }  
+    }
+    fmt::print("{} is not in vector",num);
 }
