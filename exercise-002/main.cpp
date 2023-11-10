@@ -3,10 +3,12 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
-
+void print_vector(const std::vector<int>& vec);
 auto main(int argc, char **argv) -> int
 {
     int count = 20;
+    bool print = false;
+    std::srand(std::time(nullptr));
     /**
      * CLI11 is a command line parser to add command line options
      * More info at https://github.com/CLIUtils/CLI11#usage
@@ -16,6 +18,8 @@ auto main(int argc, char **argv) -> int
     {
         app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
         app.add_option("-c,--count", count, "Set Count");
+        app.add_option("-p,--print", print, "Do you want to print out the vectors");
+
         app.parse(argc, argv);
     }
     catch (const CLI::ParseError &e)
@@ -23,20 +27,30 @@ auto main(int argc, char **argv) -> int
         return app.exit(e);
     }
     //print count 
-    printf("Count: %d\n", count);
+    fmt::print("Count: {}\n", count);
+    //create vector
     std::vector<int> vector;
-    for (int i = 0; i < count; i++)
+    for(int i = 0; i < count; i++)
     {
         vector.push_back(rand() % 100 + 1);
     }
     //print vector  
-    printf("Vector: ");
-    vector.push_back(0);
-    for (int i = 0; vector[i]; i++)
+    if(print)
     {
-        printf("%d ", vector[i]);
+        print_vector(vector);
     }
-    printf("\n");
+
+    //sort vector
+    auto start = std::chrono::system_clock::now();
+    std::sort(vector.begin(), vector.end());
+    auto end = std::chrono::system_clock::now();
+    auto elapsed = end - start;
+    //print sorted vector
+    if(print)
+    {
+        print_vector(vector);
+    }
+    fmt::print("Time elapsed {} \n",elapsed);
     /**
      * The {fmt} lib is a cross platform library for printing and formatting text
      * it is much more convenient than std::cout and printf
@@ -48,4 +62,10 @@ auto main(int argc, char **argv) -> int
     /* INSERT YOUR CODE HERE */
 
     return 0; /* exit gracefully*/
+}
+void print_vector(const std::vector<int>& vec) {
+    for (const auto& element : vec) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
 }
