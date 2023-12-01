@@ -91,7 +91,7 @@ auto main(int argc, char **argv) -> int
     // Print greypixelMatrix
     for (size_t row = greypixelMatrix.size()-1; row > 0; row--)
     {
-        for (size_t col = 0; col < greypixelMatrix[row].size(); col++)
+        for (size_t col = 0; col < greypixelMatrix[row].size() - 1; col++)
         {
             fmt::print("{}", greypixelMatrix[row][col]);
         }

@@ -23,15 +23,17 @@ std::vector<std::vector<pixel>> BMP::read(const std::string& filename)
     {
         infile.seekg(current_pos);
         pixelBuffer[row].resize(width);
-        for (int column = 0; column < width; column++)
+        for (int column = 0; column < width + bytestopad; column++)
         {
+            // uint32_t test =infile.tellg();
+            // fmt::println("current {}",test);
             infile.read(reinterpret_cast<char*>(&pi.red), sizeof(pi.red));
             infile.read(reinterpret_cast<char*>(&pi.green), sizeof(pi.green));
             infile.read(reinterpret_cast<char*>(&pi.blue), sizeof(pi.blue));
             pixelBuffer[row][column] = pi;
         }
         // Padding
-            infile.ignore(bytestopad);
+            //infile.ignore(bytestopad);
             current_pos = infile.tellg();
         //current_pos = infile.tellg() + bytestopad;
         // fmt::println("Current pos {}", current_pos);
